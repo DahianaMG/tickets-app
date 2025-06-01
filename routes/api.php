@@ -9,9 +9,11 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+//Provincia
 Route::get('get-provincias', [ProvinciaController::class, 'index']);
+Route::get('get-provincia-tickets/{id}', [ProvinciaController::class, 'getProvinciaTickets']);
 
-// Tikets
+// Tiket
 Route::get('get-tickets', [TicketController::class, 'index']);
 Route::get('get-ticket/{id}', [TicketController::class, 'show']);
 Route::post('set-ticket', [TicketController::class, 'store']);

@@ -53,9 +53,10 @@ class TicketController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Ticket $ticket)
+    public function show(int $id)
     {
-        //
+        $ticket = Ticket::find($id);
+        return response()->json($ticket);
     }
 
     /**
@@ -69,16 +70,21 @@ class TicketController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Ticket $ticket)
+    public function update(Request $request, int $id)
     {
-        //
+        $ticket = Ticket::find($id);
+        $ticket->nombre = $request->nombre;
+        $ticket->descripcion = $request->descripcion;
+        $ticket->provincia_id = $request->provincia_id;
+        $ticket->save();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Ticket $ticket)
+    public function destroy(int $id)
     {
-        //
+        $ticket = Ticket::find($id);
+        $ticket->delete();
     }
 }
