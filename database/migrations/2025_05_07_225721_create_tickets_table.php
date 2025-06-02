@@ -17,6 +17,9 @@ return new class extends Migration
             $table->text('descripcion');
             $table->unsignedBigInteger('provincia_id');
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('provincia_id')->references('id')->on('provincias');
         });
     }
 

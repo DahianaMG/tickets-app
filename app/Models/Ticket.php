@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-//use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Provincia;
+use App\Models\TicketComentario;
+use App\Models\EstadoTickets;
 
 class Ticket extends Model
 {
-    //use SoftDeletes;
+    use SoftDeletes;
 
     /**
      * Indicates if the model's ID is auto-incrementing.
@@ -36,7 +39,17 @@ class Ticket extends Model
         'provincia_id'
     ];
 
-    public function provincia() {
+    public function provincia()
+    {
         return $this->belongsTo(Provincia::class, 'provincia_id', 'id');
+    }
+    public function comentarios()
+    {
+        return $this->hasMany(TicketComentario::class, 'ticket_id', 'id');
+    }
+
+    public function estadosTickets()
+    {
+        return $this->hasMany(EstadoTicket::class, 'ticket_id', 'id');
     }
 }
