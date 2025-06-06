@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use PHPUnit\Framework\Attributes\Ticket;
+use App\Models\User;
+use App\Models\Ticket;
 
 class Provincia extends Model
 {

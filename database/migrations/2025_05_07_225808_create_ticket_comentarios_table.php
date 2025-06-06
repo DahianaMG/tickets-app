@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('ticket_comentarios', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('ticket_id');
+            $table->unsignedBigInteger('usuario_id');
+            $table->text('comentario');
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('ticket_id')->references('id')->on('tickets');
+            $table->foreign('usuario_id')->references('id')->on('users');
         });
     }
 

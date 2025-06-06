@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Provincia;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
 
 class ProvinciaController extends Controller
@@ -71,5 +72,22 @@ class ProvinciaController extends Controller
     public function destroy(Provincia $provincia)
     {
         //
+    }
+
+    public function getProvinciaTickets($id)
+    {
+        $provincia = Provincia::with('tickets')->find($id);
+        $tickets = $provincia->tickets->map(function ($ticket) {
+        return [
+            'nombre' => $ticket->nombre,
+            'descripcion' => $ticket->descripcion,
+        ];
+    });
+
+    return response()->json([
+        'id' => $provincia->id,
+        'nombre' => $provincia->nombre,
+        'tickets' => $tickets,
+    ]);
     }
 }

@@ -4,10 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\User;
-use App\Models\Ticket;
+use App\Models\EstadoTicket;
 
-class TicketComentario extends Model
+class Estado extends Model
 {
     use SoftDeletes;
 
@@ -30,19 +29,14 @@ class TicketComentario extends Model
      *
      * @var string
      */
-    protected $table = 'ticket_comentarios';
+    protected $table = 'estados';
 
     protected $fillable = [
-        'ticket_id',
-        'usuario_id',
-        'comentario'
+        'nombre',
+        'codigo'
     ];
 
-    public function users() {
-        return $this->belongsTo(User::class, 'usuario_id', 'id');
-    }
-
-    public function tickets() {
-        return $this->belongsTo(Ticket::class, 'ticket_id', 'id');
+    public function estadosTickets() {
+        return $this->hasMany(EstadoTicket::class, 'estado_id', 'id');
     }
 }

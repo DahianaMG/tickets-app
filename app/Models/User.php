@@ -3,14 +3,19 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Role;
+use App\Models\Provincia;
+use App\Models\EstadoTicket;
+use App\Models\TicketComentario;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasApiTokens, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +26,7 @@ class User extends Authenticatable
         'name',
         'email',
         'provincia_id',
+        'rol_id',
         'password',
     ];
 
@@ -47,8 +53,23 @@ class User extends Authenticatable
         ];
     }
 
-     public function provincia()
+    public function provincia()
     {
         return $this->belongsTo(Provincia::class, 'provincia_id', 'id');
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'rol_id', 'id');
+    }
+
+    public function ticketComentarios()
+    {
+        return $this->hasMany(TicketComentario::class, 'usuario_id', 'id');
+    }
+
+    public function estadoTickets()
+    {
+        return $this->hasMany(EstadoTicket::class, 'cambiado_por', 'id');
     }
 }

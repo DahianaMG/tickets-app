@@ -3,14 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\User;
 use App\Models\Ticket;
+use App\Models\Estado;
 
-class TicketComentario extends Model
+class EstadoTicket extends Model
 {
-    use SoftDeletes;
-
     /**
      * Indicates if the model's ID is auto-incrementing.
      *
@@ -30,19 +28,25 @@ class TicketComentario extends Model
      *
      * @var string
      */
-    protected $table = 'ticket_comentarios';
+    protected $table = 'estado_tickets';
 
     protected $fillable = [
         'ticket_id',
-        'usuario_id',
-        'comentario'
+        'estado_id',
+        'cambiado_por',
+        'cambiado_en'
     ];
 
-    public function users() {
-        return $this->belongsTo(User::class, 'usuario_id', 'id');
+    public function user() {
+        return $this->belongsTo(User::class, 'cambiado_por', 'id');
     }
 
-    public function tickets() {
+    public function ticket() {
         return $this->belongsTo(Ticket::class, 'ticket_id', 'id');
+    }
+
+    public function estado()
+    {
+        return $this->belongsTo(Estado::class, 'estado_id', 'id');
     }
 }
